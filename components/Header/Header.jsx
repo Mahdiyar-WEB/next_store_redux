@@ -12,7 +12,7 @@ const Header = () => {
   const [show, setShow] = useState(false);
   return (
     <header className="px-3 md:px-7">
-      <div className="flex max-w-screen-2xl mx-auto px-5 justify-between py-5 relative border mt-4 rounded-md shadow-md">
+      <div className="flex max-w-screen-2xl relative mx-auto px-5 justify-between py-5 border mt-4 rounded-md shadow-md">
         <div className="flex gap-5">
           <div>
             <RxAvatar className="text-slate-600" size={27} />

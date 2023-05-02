@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Menu = ({show,handleShow}) => {
   return (
-    <div className={`transition-transform ease-linear duration-300 px-5 py-8 absolute h-screen bg-white border-l shadow-md top-0 right-0 w-4/6 md:hidden ${show?"translate-x-0 ":"translate-x-96 "}`}>
+    <div className={`transition-transform ease-linear duration-300 px-5 py-8 absolute h-screen bg-white border-l shadow-md top-0 right-0 w-4/6 md:hidden ${show?"translate-x-0 block":"translate-x-96 hidden"}`}>
       <div className="flex justify-between">
         <div>
           <MdStorefront size={24} />
