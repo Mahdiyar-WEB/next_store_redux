@@ -1,27 +1,63 @@
-"use client";
-import React, { useState } from "react";
+'use client'
 import Blog from "@/components/Blog/Blog";
-import reactImage from "@/public/images/react.png";
-import vueImage from "@/public/images/vue.png";
-import nextImage from "@/public/images/next.jpg";
 import mahdiyarImage from "@/public/images/mahdiyar.jpeg";
-import BlogTabs from "@/components/BlogTabs/BlogTabs";
-import BlogFilterSort from "@/components/BlogFilterSort/BlogFilterSort";
+import { useState } from "react";
 
-const Blogs = () => {
-  const [showCategory, setShowCategory] = useState(false);
+const fetchBlogs = async (page) => {
+  const response = await fetch(
+    `http://localhost:5000/api/posts?page=${page}&limit=3`,
+    { cache: "no-store" }
+  );
+  return response.json();
+};
+
+const Blogs = async () => {
+  const [page,setPage]= useState(1);
+  const {
+    data: { docs: blogs, totalPages, hasPrevPage, hasNextPage },
+  } = await fetchBlogs(page);
   return (
-    <main className="md:px-7 pt-20">
-      <div className="max-w-screen-2xl mx-auto grid md:gap-10 grid-cols-12 md:grid-rows-[70px_minmax(300px,_1fr)]">
-        <BlogFilterSort/>
-        <BlogTabs showCategory={showCategory} handleShowCategory={()=> setShowCategory(!showCategory)}/>
-        <article className="md:col-span-9  order-3 md:order-3 grid col-span-12 grid-cols-12 gap-y-8 md:gap-x-8">
-          <Blog authorImage={mahdiyarImage} authorName="مهدیار" category="ریکت" title="مزیت های استفاده از ریداکس در ریکت" alt="react" image={reactImage} />
-          <Blog authorImage={mahdiyarImage} authorName="مهدیار" category="ویو" title="ویو چیست؟" alt="vue" image={vueImage} />
-          <Blog authorImage={mahdiyarImage} authorName="مهدیار" category="نکست" title="نکست چیست؟" alt="next" image={nextImage} />
-        </article>
-      </div>
-    </main>
+    <article className="md:col-span-9  order-3 md:order-3 grid col-span-12 grid-cols-12 gap-y-8 md:gap-x-8">
+      {blogs.map((blog) => {
+        return (
+          <Blog
+            key={blog.id}
+            authorImage={mahdiyarImage}
+            author={blog.author}
+            isLiked={blog.isLiked}
+            likesCount={blog.likesCount}
+            commentsCount={blog.commentsCount}
+            alt={blog.slug}
+            title={blog.title}
+            category={blog.category}
+            image={blog.coverImage}
+            readingTime={blog.readingTime}
+          />
+        );
+      })}
+      {totalPages > 1 && (
+        <div className="flex  justify-center col-span-12 gap-3">
+          <button
+            className={`border  px-2 py-1 rounded-md transition-all duration-300 ${
+              hasNextPage ? "bg-blue-500 text-white border-blue-500" : "border-gray-300 text-gray-300"
+            }`}
+            disabled={!hasNextPage}
+            onClick={()=> setPage(page+1)}
+          >
+            بعدی
+          </button>
+          <button
+            className={`border  px-2 py-1 rounded-md transition-all duration-300 ${
+              hasPrevPage ? "bg-blue-500 text-white border-blue-500" : "border-gray-300 text-gray-300"
+            }`}
+            disabled={!hasPrevPage}
+            onClick={()=> setPage(prevPage=> prevPage-1)}
+          >
+            قبلی
+          </button>
+        </div>
+      )}
+    </article>
   );
 };
 
