@@ -16,18 +16,18 @@ const Blog = ({ image, alt, title, category, authorImage, authorName }) => {
           alt={alt}
         />
       </div>
-      <div className="flex flex-col bg-gray-100 mx-3 mb-3 mt-10 rounded-3xl h-40 text-end px-3 pt-4 pb-3">
-        <p className="font-bold text-2xl">{title}</p>
-        <div className="mt-auto">
+      <div className="flex flex-col bg-gray-100 mx-3 mb-3 mt-10 rounded-3xl h-full  text-end px-3 pt-4 pb-3">
+        <h2 className="font-bold text-2xl">{title}</h2>
+        <div className="mt-4 flex-1 flex flex-col justify-end">
           {/* author details */}
           <div className="flex justify-between mb-3">
-            <div className="bg-violet-200 px-5 text-sm text-blue-600 flex items-center rounded-full">
+            <div className="bg-blue-100 px-5 py-0 text-xs hover:bg-blue-600 hover:text-blue-100 cursor-pointer transition-all duration-200  text-blue-600 flex items-center rounded-full">
               {category}
             </div>
             <div className="flex items-center gap-2">
               <span className="opacity-75 text-sm">{authorName}</span>
               <Image
-                className="object-cover w-8 h-8  rounded-full"
+                className="object-cover w-8 h-8  rounded-full ring-2 ring-white"
                 src={authorImage}
                 alt={authorName}
               />
