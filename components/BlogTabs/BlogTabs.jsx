@@ -54,6 +54,7 @@ const BlogAside = ({ blogTabs:tabs }) => {
               >
                 <Link
                   className="block px-4 py-2"
+                  prefetch={true}
                   href={`/blogs/${englishTitle}`}
                 >
                   {title}

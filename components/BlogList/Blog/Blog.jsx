@@ -4,11 +4,12 @@ import React, { useState } from "react";
 import { BsBookmark, BsFillBookmarkFill, BsClockHistory } from "react-icons/bs";
 import { BiMessageDetail } from "react-icons/bi";
 import { AiOutlineHeart,AiFillHeart } from "react-icons/ai";
+import Link from "next/link";
 
 const Blog = ({ image, alt, title, category, authorImage, author,readingTime,isLiked,likesCount,commentsCount,isBookmarked }) => {
   const [isBookmark, setIsBookmark] = useState(isBookmarked);
   return (
-    <section className="rounded-3xl px-3 pt-3 overflow-hidden border shadow-sm col-span-12 mx-2 md:mx-0 md:col-span-6 lg:col-span-4 h-full flex flex-col">
+    <section dir="ltr" className="rounded-3xl px-3 pt-3 overflow-hidden border shadow-sm col-span-12 mx-2 md:mx-0 md:col-span-6 lg:col-span-4 h-full flex flex-col">
       <div className="aspect-w-16 aspect-h-9 ">
         <Image
           className="w-full h-full object-center rounded-3xl object-cover"
@@ -22,8 +23,10 @@ const Blog = ({ image, alt, title, category, authorImage, author,readingTime,isL
         <div className="mt-4 flex-1 flex flex-col justify-end">
           {/* author details */}
           <div className="flex justify-between mb-5">
-            <div className="bg-blue-100 px-5 py-0 text-xs hover:bg-blue-600 hover:text-blue-100 cursor-pointer transition-all duration-200  text-blue-600 flex items-center rounded-full">
+            <div className="bg-blue-100  text-xs hover:bg-blue-600 hover:text-blue-100 cursor-pointer transition-all duration-200  text-blue-600 flex items-center rounded-full">
+              <Link className="flex items-center px-5 py-0 h-full" href={`/blogs/${category.englishTitle}`}>
               {category.title}
+              </Link>
             </div>
             <div className="flex items-center gap-2">
               <span className="opacity-75 text-sm">{author.name}</span>
