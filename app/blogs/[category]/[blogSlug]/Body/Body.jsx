@@ -3,7 +3,7 @@ import React from "react";
 
 const Body = ({ title, image }) => {
   return (
-    <article className="px-3 prose-img:rounded-3xl sm:px-0 overflow-hidden container mx-auto text-end max-w-screen-lg prose prose-slate prose-h1:font-black prose-h1:text-3xl prose-h2:font-extrabold prose-h2:text-2xl prose-p:text-base prose-p:leading-8 md:prose-p:leading-10 md:prose-p:text-lg">
+    <article className="mb-6 px-3 prose-img:rounded-3xl sm:px-0 overflow-hidden container mx-auto text-end max-w-screen-lg prose prose-slate prose-h1:font-black prose-h1:text-3xl prose-h2:font-extrabold prose-h2:text-2xl prose-p:text-base prose-p:leading-8 md:prose-p:leading-10 md:prose-p:text-lg">
       <h1>{title}</h1>
       <h2>عنوان تستی اول</h2>
       <p>
@@ -40,20 +40,19 @@ const Body = ({ title, image }) => {
         پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
       </p>
       <pre className="text-start">
-        {`
-            module.exports = {
-                content: [
-                  './pages/**/*.{js,ts,jsx,tsx,mdx}',
-                  './components/**/*.{js,ts,jsx,tsx,mdx}',
-                  './app/**/*.{js,ts,jsx,tsx,mdx}',
-                ],
-                theme: {
-                },
-                plugins: [
-                  require('@tailwindcss/aspect-ratio'),
-                  require('@tailwindcss/typography'),
-                ],
-              }
+        {`module.exports = {
+          content: [
+            './pages/**/*.{js,ts,jsx,tsx,mdx}',
+            './components/**/*.{js,ts,jsx,tsx,mdx}',
+            './app/**/*.{js,ts,jsx,tsx,mdx}',
+          ],
+          theme: {
+          },
+          plugins: [
+            require('@tailwindcss/aspect-ratio'),
+            require('@tailwindcss/typography'),
+          ],
+  }
         `}
       </pre>
     </article>

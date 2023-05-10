@@ -5,6 +5,7 @@ import { BsBookmark, BsFillBookmarkFill, BsClockHistory } from "react-icons/bs";
 import { BiMessageDetail } from "react-icons/bi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import Link from "next/link";
+import toPersianDigits from "@/utils/toPersianDigits";
 
 const Blog = ({
   image,
@@ -73,11 +74,11 @@ const Blog = ({
                 {isBookmark ? <BsFillBookmarkFill /> : <BsBookmark />}
               </button>
               <div className="flex items-center gap-1 bg-slate-300 p-1 rounded-md text-gray-500">
-                <span className="text-xs font-semibold">{commentsCount}</span>
+                <span className="text-xs font-semibold">{toPersianDigits(commentsCount)}</span>
                 <BiMessageDetail />
               </div>
-              <button className="flex items-center gap-1 bg-slate-300 p-1 rounded-md text-red-500">
-                <span className="text-xs font-semibold">{likesCount}</span>
+              <button className="flex items-center gap-1 bg-slate-300 p-1 rounded-md text-red-500 transition-all duration-200 hover:bg-red-500 hover:text-red-100">
+                <span className="text-xs font-semibold">{toPersianDigits(likesCount)}</span>
                 {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
               </button>
             </div>

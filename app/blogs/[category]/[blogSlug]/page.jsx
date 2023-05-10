@@ -1,3 +1,4 @@
+import BlogActions from "./BlogActions/BlogActions";
 import Body from "./Body/Body";
 import Header from "./Header/Header";
 
@@ -17,7 +18,11 @@ const PostSlug = async ({ params: { blogSlug } }) => {
       readingTime,
       createdAt,
       isBookmarked,
-      coverImage
+      coverImage,
+      likesCount,
+      commentsCount,
+      isLiked,
+      slug
     },
   } = await fetchBlog(blogSlug);
   const time = new Date(createdAt).toLocaleDateString("fa-IR");
@@ -33,6 +38,7 @@ const PostSlug = async ({ params: { blogSlug } }) => {
         time={time}
       />
       <Body image={coverImage} title={title}/>
+      <BlogActions englishTitle={englishTitle} title={title} slug={slug} likesCount={likesCount} isLiked={isLiked} commentsCount={commentsCount} isBookmarked={isBookmarked} />
     </>
   );
 };
