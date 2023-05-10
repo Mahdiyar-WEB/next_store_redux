@@ -4,13 +4,11 @@ import BlogTabsMobile from "./BlogTabsMobile/BlogTabsMobile";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
-const BlogAside = ({ blogTabs:tabs }) => {
-  const [showCategory, setShowCategory] = useState(false);
+const BlogAside = ({ blogTabs: tabs }) => {
+  const [showCategory, setShowCategory] = useState(true);
   const pathname = usePathname();
-
   return (
-    <aside className="col-span-12 order-1 md:order-2 mb-2 md:mb-0 md:block md:row-span-2 md:col-span-3">
+    <aside className="col-span-12 order-1 md:order-2 mb-2 md:mb-0  md:row-span-2 md:col-span-3 ">
       <div className="hidden md:block">
         <button
           onClick={() => setShowCategory(!showCategory)}

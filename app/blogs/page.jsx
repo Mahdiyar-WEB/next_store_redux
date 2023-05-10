@@ -1,3 +1,4 @@
+import BlogLayout from "@/components/BlogLayout/BlogLayout";
 import BlogList from "@/components/BlogList/BlogList";
 
 const fetchBlogs = async (page) => {
@@ -17,10 +18,11 @@ const Blogs = async ({ searchParams: { page = 1 } }) => {
       hasNextPage,
       nextPage,
       prevPage,
+      page:currentPage
     },
   } = await fetchBlogs(page);
   return (
-    <article className="md:col-span-9  order-3 md:order-3 grid col-span-12 grid-cols-12 gap-y-8 md:gap-x-8">
+  <BlogLayout>
       <BlogList
         blogs={blogs}
         totalPages={totalPages}
@@ -28,8 +30,9 @@ const Blogs = async ({ searchParams: { page = 1 } }) => {
         hasNextPage={hasNextPage}
         nextPage={nextPage}
         prevPage={prevPage}
+        currentPage={currentPage}
       />
-    </article>
+  </BlogLayout>
   );
 };
 

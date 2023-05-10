@@ -14,7 +14,7 @@ const CategoryDetailsMobile = ({ tabs }) => {
   
   return (
     <div
-      className="md:hidden flex justify-center w-full gap-2 overflow-auto pb-5 px-2"
+      className="md:hidden flex sm:justify-center w-full gap-2 overflow-auto pb-5 px-2"
       dir="rtl"
     >
       {tabs.map(({ title, englishTitle, _id }) => {

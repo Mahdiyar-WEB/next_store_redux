@@ -1,3 +1,4 @@
+import BlogLayout from "@/components/BlogLayout/BlogLayout";
 import BlogList from "@/components/BlogList/BlogList";
 // import { useState } from "react";
 
@@ -24,19 +25,16 @@ const CategoryBlogs = async ({
     },
   } = await fetchBlogs(page, category);
   return (
-    <article
-      dir="rtl"
-      className="md:col-span-9  order-3 md:order-3 grid col-span-12 grid-cols-12 gap-y-8 md:gap-x-8"
-    >
-      <BlogList
-        blogs={blogs}
-        totalPages={totalPages}
-        hasPrevPage={hasPrevPage}
-        hasNextPage={hasNextPage}
-        nextPage={nextPage}
-        prevPage={prevPage}
-      />
-    </article>
+    <BlogLayout>
+        <BlogList
+          blogs={blogs}
+          totalPages={totalPages}
+          hasPrevPage={hasPrevPage}
+          hasNextPage={hasNextPage}
+          nextPage={nextPage}
+          prevPage={prevPage}
+        />
+    </BlogLayout>
   );
 };
 

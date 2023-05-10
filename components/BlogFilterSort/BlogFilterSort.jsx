@@ -19,7 +19,7 @@ const BlogFilter = () => {
         <p className="font-semibold text-gray-700">:مرتب سازی</p>
         <HiOutlineAdjustmentsHorizontal size={24} />
       </div>
-      <BlogFilterSortMobile/>
+      <BlogFilterSortMobile />
     </div>
   );
 };
