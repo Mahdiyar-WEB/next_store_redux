@@ -19,7 +19,8 @@ const Blog = ({
   likesCount,
   commentsCount,
   isBookmarked,
-  slug
+  slug,
+  isRelated
 }) => {
   const [isBookmark, setIsBookmark] = useState(isBookmarked);
   return (
@@ -39,7 +40,7 @@ const Blog = ({
         <Link href={`/blogs/${category.englishTitle}/${slug}`} className="w-fit ms-auto font-bold text-xl hover:text-purple-500">{title}</Link>
         <div className="mt-4 flex-1 flex flex-col justify-end">
           {/* author details */}
-          <div className="flex justify-between mb-5">
+          <div className={`flex justify-between ${isRelated?"mb-0":"mb-5"}`}>
             <div className="bg-blue-100  text-xs hover:bg-blue-600 hover:text-blue-100 cursor-pointer transition-all duration-200  text-blue-600 flex items-center rounded-full">
               <Link
                 className="flex items-center px-5 py-0 h-full"
@@ -58,10 +59,10 @@ const Blog = ({
             </div>
           </div>
           {/* footer details */}
-          <div className="flex justify-between items-center">
+          <div className={`justify-between items-center ${isRelated ? "hidden":"flex"}`}>
             <p className="flex gap-2">
-              <span dir="rtl" className="text-xs text-gray-500">
-                <span>{readingTime}</span>
+              <span dir="rtl" className="text-xs flex gap-1 text-gray-500">
+                <span>{toPersianDigits(readingTime)}</span>
                 دقیقه
               </span>
               <BsClockHistory className="text-gray-500" />

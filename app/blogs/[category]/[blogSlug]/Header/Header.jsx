@@ -8,11 +8,11 @@ import mahdiyarImage from "@/public/images/mahdiyar.jpeg";
 
 const Header = ({isBookmarked,englishTitle,title,readingTime,name,biography,time}) => {
   return (
-    <header className="container max-w-screen-lg mx-auto mb-10 px-3 sm:px-0">
+    <header className="container max-w-screen-lg mx-auto mb-10 px-3 md:px-0">
     {/* header */}
-    <div className="sm:justify-between sm:flex-row flex flex-col-reverse gap-3">
+    <div className="sm:justify-between sm:flex-row flex flex-col-reverse gap-6 sm:gap-3">
       {/* actions */}
-      <div className="flex gap-3 h-fit  justify-end pe-4 sm:justify-start sm:pe-0 ">
+      <div className="flex gap-3 h-fit  justify-end  sm:justify-start ">
         <button className="flex text-sm px-3 rounded-3xl py-1 items-center gap-2 border border-gray-400 text-gray-500">
           {isBookmarked ? <BsFillBookmarkFill /> : <BsBookmark />}
           {isBookmarked ? "دخیره شده" : "ذخیره"}

@@ -32,7 +32,7 @@ const BlogActions = ({
     }, 3000);
   };
   return (
-    <footer className="container max-w-screen-lg mx-auto px-3 sm:px-0 border-b-2 border-slate-600 pb-4">
+    <section className="container mb-10 max-w-screen-lg mx-auto px-3 md:px-0 border-b-2 border-slate-600 pb-4">
       {/* hashtags */}
       <ul className="flex gap-4 justify-end flex-wrap mb-8">
         <li className="border border-gray-200 bg-gray-200 whitespace-nowrap text-gray-500 transition-all cursor-pointer duration-200 hover:bg-gray-300 px-3 py-1 rounded-3xl">
@@ -49,7 +49,7 @@ const BlogActions = ({
         </li>
       </ul>
       {/* actions */}
-      <div className="flex flex-col-reverse gap-y-6 sm:flex-row sm:gap-y-0 px-5 md:px-0 justify-between items-center">
+      <div className="flex flex-col-reverse gap-y-6 sm:flex-row sm:gap-y-0  justify-between items-center">
         <div className="flex items-center gap-6">
           <CopyToClipboard
             onCopy={copyHandler}
@@ -105,7 +105,7 @@ const BlogActions = ({
           </p>
         </div>
       </div>
-    </footer>
+    </section>
   );
 };
 

@@ -14,6 +14,7 @@ const BlogList = ({
   nextPage,
   prevPage,
   currentPage,
+  relatedPosts
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -35,6 +36,7 @@ const BlogList = ({
       {blogs.map((blog) => {
         return (
           <Blog
+            isRelated={relatedPosts}
             key={blog.id}
             authorImage={mahdiyarImage}
             author={blog.author}
