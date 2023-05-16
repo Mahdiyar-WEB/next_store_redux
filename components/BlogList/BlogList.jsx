@@ -37,7 +37,7 @@ const BlogList = ({
         return (
           <Blog
             isRelated={relatedPosts}
-            key={blog.id}
+            key={blog._id}
             authorImage={mahdiyarImage}
             author={blog.author}
             isLiked={blog.isLiked}

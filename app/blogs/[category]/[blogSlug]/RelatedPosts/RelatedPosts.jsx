@@ -11,6 +11,7 @@ const RelatedPosts = ({relatedPosts}) => {
       >
         <BlogList relatedPosts={true} blogs={relatedPosts}/>
       </section>
+      <hr className='mt-6 border-slate-300'/>
     </section>
   )
 }

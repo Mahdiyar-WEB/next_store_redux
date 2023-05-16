@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React from 'react'
 import { BsBookmark, BsFillBookmarkFill, BsLink45Deg } from 'react-icons/bs'
 import mahdiyarImage from "@/public/images/mahdiyar.jpeg";
+import toLocalDate from '@/utils/toLocalDate'
 
 
 const Header = ({isBookmarked,englishTitle,title,readingTime,name,biography,time}) => {
@@ -37,7 +38,7 @@ const Header = ({isBookmarked,englishTitle,title,readingTime,name,biography,time
           <p className="flex gap-1 text-sm font-medium text-gray-600 text-end">
             <span>خواندن {toPersianDigits(readingTime)} دقیقه</span>
             <span>&bull;</span>
-            <span>{time}</span>
+            <span>{toLocalDate(time)}</span>
           </p>
         </div>
         <div className="rounded-full overflow-hidden w-24 h-24">

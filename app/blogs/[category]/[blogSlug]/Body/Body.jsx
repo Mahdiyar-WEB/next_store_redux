@@ -3,7 +3,10 @@ import React from "react";
 
 const Body = ({ title, image }) => {
   return (
-    <article className="mb-6 px-3 prose-img:rounded-3xl md:px-0 overflow-hidden container mx-auto text-end max-w-screen-lg prose prose-slate prose-h1:font-black prose-h1:text-3xl prose-h2:font-extrabold prose-h2:text-2xl prose-p:text-base prose-p:leading-8 md:prose-p:leading-10 md:prose-p:text-lg">
+    <article
+      dir="rtl"
+      className="mb-6 px-3 prose-pre:text-start prose-p:text-justify prose-h2:text-start prose-img:rounded-3xl md:px-0 overflow-hidden container mx-auto text-end max-w-screen-lg prose prose-slate prose-h1:text-start prose-h1:font-black prose-h1:text-3xl prose-h2:font-extrabold prose-h2:text-2xl prose-p:text-base prose-p:leading-8 md:prose-p:leading-10 md:prose-p:text-lg"
+    >
       <h1>{title}</h1>
       <h2>عنوان تستی اول</h2>
       <p>
@@ -39,7 +42,7 @@ const Body = ({ title, image }) => {
         رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی، و جوابگوی سوالات
         پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.
       </p>
-      <pre className="text-start">
+      <pre dir="ltr">
         {`module.exports = {
           content: [
             './pages/**/*.{js,ts,jsx,tsx,mdx}',

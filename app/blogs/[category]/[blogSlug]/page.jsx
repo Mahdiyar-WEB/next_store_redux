@@ -1,4 +1,5 @@
 import BlogActions from "./BlogActions/BlogActions";
+import BlogComments from "./BlogComments/BlogComments";
 import Body from "./Body/Body";
 import Header from "./Header/Header";
 import RelatedPosts from "./RelatedPosts/RelatedPosts";
@@ -24,10 +25,10 @@ const PostSlug = async ({ params: { blogSlug } }) => {
       commentsCount,
       isLiked,
       slug,
-      related
+      related,
+      comments
     },
   } = await fetchBlog(blogSlug);
-  const time = new Date(createdAt).toLocaleDateString("fa-IR");
   return (
     <>
       <Header
@@ -37,11 +38,12 @@ const PostSlug = async ({ params: { blogSlug } }) => {
         readingTime={readingTime}
         name={name}
         biography={biography}
-        time={time}
+        time={createdAt}
       />
       <Body image={coverImage} title={title}/>
       <BlogActions englishTitle={englishTitle} title={title} slug={slug} likesCount={likesCount} isLiked={isLiked} commentsCount={commentsCount} isBookmarked={isBookmarked} />
       <RelatedPosts relatedPosts={related} />
+      <BlogComments comments={comments}/>
     </>
   );
 };
