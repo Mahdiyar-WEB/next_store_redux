@@ -10,12 +10,23 @@ import { useState } from "react";
 
 const Header = () => {
   const [show, setShow] = useState(false);
+
+  const handleChangeShow = () => {
+    const willShow = !show ? "hidden" : "auto";
+    document.body.style.overflow = willShow;
+    setShow(!show);
+  };
   return (
-    <header className="px-3 md:px-7">
-      <div className="flex max-w-screen-2xl relative mx-auto px-5 justify-between py-5 border mt-4 rounded-md shadow-md">
-        <div className="flex gap-5">
+    <header className="px-3 md:px-7 relative">
+      <div className="flex max-w-screen-2xl font-semibold  mx-auto px-5 justify-between py-5 border mt-4 rounded-md shadow-md">
+        <div className="flex items-center gap-5">
           <div>
-            <RxAvatar className="text-slate-600" size={27} />
+            <Link className="flex gap-1" href="/signin-signup">
+              <span>عضویت</span>
+              /
+              <span>ورود</span>
+            </Link>
+            {/*   <RxAvatar className="text-slate-600" size={27} /> */}
           </div>
           <div>
             <AiOutlineShoppingCart className="text-purple-700" size={27} />
@@ -24,7 +35,7 @@ const Header = () => {
             <BsSun className="text-blue-600" size={25} />
           </div>
         </div>
-        <div className="gap-8 hidden md:flex">
+        <div className="gap-8 hidden items-center md:flex">
           <ul className="flex gap-4">
             <li>
               <Link href="/about-us">درباره ما</Link>
@@ -44,10 +55,16 @@ const Header = () => {
           </div>
         </div>
         <div className="md:hidden ">
-          <button onClick={() => setShow(!show)}>
+          <button onClick={() => handleChangeShow()}>
             <VscMenu size={30} />
           </button>
-          <Menu show={show} handleShow={() => setShow(!show)} />
+          <Menu show={show} handleShow={() => handleChangeShow()} />
+          <div
+            onClick={() => handleChangeShow()}
+            className={`${
+              show ? "block opacity-40" : "hidden"
+            } fixed inset-0 w-screen h-screen z-10 bg-black`}
+          ></div>
         </div>
       </div>
     </header>
