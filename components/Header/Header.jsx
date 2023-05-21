@@ -1,16 +1,16 @@
 "use client";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { RxAvatar } from "react-icons/rx";
 import { BsSun } from "react-icons/bs";
 import { MdStorefront } from "react-icons/md";
 import { VscMenu } from "react-icons/vsc";
 import Link from "next/link";
 import Menu from "./Menu/Menu";
 import { useState } from "react";
+import { useAuth } from "@/Context/AuthContext";
 
 const Header = () => {
   const [show, setShow] = useState(false);
-
+  const user = useAuth();
   const handleChangeShow = () => {
     const willShow = !show ? "hidden" : "auto";
     document.body.style.overflow = willShow;

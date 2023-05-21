@@ -2,6 +2,7 @@ import Header from "@/components/Header/Header";
 import "./globals.css";
 import Footer from "@/components/Footer/Footer";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/Context/AuthContext";
 
 export const metadata = {
   title: "Create Next App",
@@ -12,10 +13,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Header />
-        {children}
-        <Footer />
-        <Toaster/>
+        <AuthProvider>
+          <Header />
+          {children}
+          <Footer />
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
