@@ -1,16 +1,19 @@
+import axios from "axios";
 import { useFormik } from "formik";
+import { toast } from "react-hot-toast";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 const initialValues = {
-  username: "",
+  name: "",
   email: "",
-  phone: "",
+  phoneNumber: "",
   confirmPassword: "",
   password: "",
 };
 
 const validationSchema = Yup.object({
-  username: Yup.string()
+  name: Yup.string()
     .required("نام کاربری را وارد کنید")
     .min(3, "نام کاربری کوتاه است"),
   email: Yup.string().required("ایمیل را وارد کنید").email("ایمیل نامعتبر است"),
@@ -20,13 +23,27 @@ const validationSchema = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), ""], "رمز عبور همخوانی ندارد")
     .required("تایید رمز عبور را وارد کنید"),
-  phone: Yup.string()
+  phoneNumber: Yup.string()
     .required("شماره موبایل را وارد کنید")
     .matches(/^[0-9]{11}$/, "شماره موبایل نادرست است")
     .nullable(),
 });
+
 const Signup = () => {
-  const onSubmit = (values) => {};
+  const router = useRouter();
+  const onSubmit = (values) => {
+    const { confirmPassword, ...newValues } = values;
+    console.log("🚀 ~ file: Signup.jsx:31 ~ onSubmit ~ newValues:", newValues);
+    axios
+      .post("http://localhost:5000/api/user/signup", newValues, {
+        withCredentials: true,
+      })
+      .then(() => {
+        toast.success("ثبت نام با موفقیت انجام شد");
+        router.push("/");
+      })
+      .catch((err) => toast.error(err.response.data.message));
+  };
 
   const formik = useFormik({
     initialValues,
@@ -43,15 +60,15 @@ const Signup = () => {
       <div className="flex flex-col gap-2 ">
         <label className="text-sm flex justify-between w-full font-medium">
           نام کاربری
-          {formik.touched.username && formik.errors.username && (
-            <span className="text-red-500">{formik.errors.username}</span>
+          {formik.touched.name && formik.errors.name && (
+            <span className="text-red-500">{formik.errors.name}</span>
           )}
         </label>
         <input
-          name="username"
-          {...formik.getFieldProps("username")}
+          name="name"
+          {...formik.getFieldProps("name")}
           className={`border  rounded-md py-2 px-3  w-full ${
-            formik.touched.username && formik.errors.username
+            formik.touched.name && formik.errors.name
               ? "border-red-500 outline-red-500"
               : "border-gray-300 outline-blue-400"
           }`}
@@ -61,15 +78,15 @@ const Signup = () => {
       <div className="flex flex-col gap-2 ">
         <label className="text-sm flex justify-between w-full font-medium">
           شماره موبایل
-          {formik.touched.phone && formik.errors.phone && (
-            <span className="text-red-500">{formik.errors.phone}</span>
+          {formik.touched.phoneNumber && formik.errors.phoneNumber && (
+            <span className="text-red-500">{formik.errors.phoneNumber}</span>
           )}
         </label>
         <input
-          name="phone"
-          {...formik.getFieldProps("phone")}
+          name="phoneNumber"
+          {...formik.getFieldProps("phoneNumber")}
           className={`border  rounded-md py-2 px-3  w-full ${
-            formik.touched.phone && formik.errors.phone
+            formik.touched.phoneNumber && formik.errors.phoneNumber
               ? "border-red-500 outline-red-500"
               : "border-gray-300 outline-blue-400"
           }`}

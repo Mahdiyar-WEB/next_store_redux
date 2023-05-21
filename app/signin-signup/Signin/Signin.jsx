@@ -1,5 +1,9 @@
+'use client'
+import axios from "axios";
 import { useFormik } from "formik";
+import { toast } from "react-hot-toast";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 const initialValues = {
   email: "",
@@ -12,7 +16,18 @@ const validationSchema = Yup.object({
     .min(8, "رمز عبور کوتاه است"),
 });
 const Signin = () => {
-  const onSubmit = (values) => {};
+  const router = useRouter();
+  const onSubmit = (values) => {
+    axios
+      .post("http://localhost:5000/api/user/signin", values, {
+        withCredentials: true, //must be set for receive http only cookies form backend
+      })
+      .then(() => {
+        toast.success("خوش آمدید")
+        router.push("/"); 
+      })
+      .catch((err) => toast.error(err.response.data.message));
+  };
 
   const formik = useFormik({
     validateOnMount: true,
