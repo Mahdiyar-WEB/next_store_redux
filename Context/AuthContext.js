@@ -36,6 +36,27 @@ const reducer = (state, action) => {
         error: action.error,
       };
     }
+    case "SIGNUP-PENDING": {
+      return {
+        user: null,
+        loading: true,
+        error: null,
+      };
+    }
+    case "SIGNUP-SUCCESS": {
+      return {
+        user: action.payload,
+        loading: false,
+        error: null,
+      };
+    }
+    case "SIGNUP-FAILURE": {
+      return {
+        user: null,
+        loading: false,
+        error: action.error,
+      };
+    }
     default: {
       return state;
     }
@@ -59,6 +80,27 @@ const asyncActionHandlers = {
           toast.error(err.response?.data?.message);
           dispatch({
             type: "SIGNIN-FAILURE",
+            error: err.response?.data?.message,
+          });
+        });
+    },
+    SIGNUP:
+    ({ dispatch }) =>
+    async (action) => {
+      console.log('hi');
+      dispatch({ type: "SIGNUP-PENDING" });
+      await axios
+        .post("http://localhost:5000/api/user/signup", action.payload, {
+          withCredentials: true, //must be set for receive http only cookies form backend
+        })
+        .then((res) => {
+          toast.success("ثبت نام با موفقیت انجام شد");
+          dispatch({ type: "SIGNUP-SUCCESS", payload: res.data });
+        })
+        .catch((err) => {
+          toast.error(err.response?.data?.message);
+          dispatch({
+            type: "SIGNUP-FAILURE",
             error: err.response?.data?.message,
           });
         });

@@ -22,7 +22,6 @@ const Signin = () => {
   const router = useRouter();
   const dispatch = useAuthActions();
   const { loading } = useAuth();
-  console.log("🚀 ~ file: Signin.jsx:25 ~ Signin ~ loading:", loading);
   const onSubmit = (values) => {
     dispatch({ type: "SIGNIN", payload: values });
   };
