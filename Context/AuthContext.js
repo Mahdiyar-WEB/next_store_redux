@@ -3,6 +3,7 @@ import axios from "axios";
 import { createContext, useContext, useReducer } from "react";
 import { toast } from "react-hot-toast";
 import { useReducerAsync } from "use-reducer-async";
+import { useRouter } from "next/navigation";
 
 const AuthContext = createContext();
 const AuthContextDispatcher = createContext();
@@ -63,51 +64,55 @@ const reducer = (state, action) => {
   }
 };
 
-const asyncActionHandlers = {
-  SIGNIN:
-    ({ dispatch }) =>
-    async (action) => {
-      dispatch({ type: "SIGNIN-PENDING" });
-      await axios
-        .post("http://localhost:5000/api/user/signin", action.payload, {
-          withCredentials: true, //must be set for receive http only cookies form backend
-        })
-        .then((res) => {
-          toast.success("خوش آمدید");
-          dispatch({ type: "SIGNIN-SUCCESS", payload: res.data });
-        })
-        .catch((err) => {
-          toast.error(err.response?.data?.message);
-          dispatch({
-            type: "SIGNIN-FAILURE",
-            error: err.response?.data?.message,
-          });
-        });
-    },
-    SIGNUP:
-    ({ dispatch }) =>
-    async (action) => {
-      console.log('hi');
-      dispatch({ type: "SIGNUP-PENDING" });
-      await axios
-        .post("http://localhost:5000/api/user/signup", action.payload, {
-          withCredentials: true, //must be set for receive http only cookies form backend
-        })
-        .then((res) => {
-          toast.success("ثبت نام با موفقیت انجام شد");
-          dispatch({ type: "SIGNUP-SUCCESS", payload: res.data });
-        })
-        .catch((err) => {
-          toast.error(err.response?.data?.message);
-          dispatch({
-            type: "SIGNUP-FAILURE",
-            error: err.response?.data?.message,
-          });
-        });
-    },
-};
-
 const AuthProvider = ({ children }) => {
+  const router = useRouter();
+  const asyncActionHandlers = {
+    SIGNIN:
+      ({ dispatch }) =>
+      async (action) => {
+        dispatch({ type: "SIGNIN-PENDING" });
+        await axios
+          .post("http://localhost:5000/api/user/signin", action.payload, {
+            withCredentials: true, //must be set for receive http only cookies form backend
+          })
+          .then((res) => {
+            toast.success("خوش آمدید");
+            dispatch({ type: "SIGNIN-SUCCESS", payload: res.data });
+            router.push("/");
+          })
+          .catch((err) => {
+            err.response?.data?.message &&
+              toast.error(err.response?.data?.message);
+            dispatch({
+              type: "SIGNIN-FAILURE",
+              error: err.response?.data?.message,
+            });
+          });
+      },
+    SIGNUP:
+      ({ dispatch }) =>
+      async (action) => {
+        console.log("hi");
+        dispatch({ type: "SIGNUP-PENDING" });
+        await axios
+          .post("http://localhost:5000/api/user/signup", action.payload, {
+            withCredentials: true, //must be set for receive http only cookies form backend
+          })
+          .then((res) => {
+            toast.success("ثبت نام با موفقیت انجام شد");
+            dispatch({ type: "SIGNUP-SUCCESS", payload: res.data });
+            router.push("/");
+          })
+          .catch((err) => {
+            err.response?.data?.message &&
+              toast.error(err.response?.data?.message);
+            dispatch({
+              type: "SIGNUP-FAILURE",
+              error: err.response?.data?.message,
+            });
+          });
+      },
+  };
   const [user, dispatch] = useReducerAsync(
     reducer,
     initialState,

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
 import { useAuth, useAuthActions } from "@/Context/AuthContext";
 
 const initialValues = {
@@ -31,12 +30,11 @@ const validationSchema = Yup.object({
 });
 
 const Signup = () => {
-  const router = useRouter();
   const dispatch = useAuthActions();
   const {loading} = useAuth();
+  
   const onSubmit = (values) => {
     const { confirmPassword, ...newValues } = values;
-    console.log("🚀 ~ file: Signup.jsx:31 ~ onSubmit ~ newValues:", newValues);
     dispatch({type:"SIGNUP",payload: newValues});
   };
 
@@ -46,6 +44,7 @@ const Signup = () => {
     validationSchema,
     onSubmit,
   });
+  
   return (
     <form
       dir="rtl"
