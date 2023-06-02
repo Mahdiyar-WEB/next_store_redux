@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { toast } from "react-hot-toast";
 import { useReducerAsync } from "use-reducer-async";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ const AuthContextDispatcher = createContext();
 
 const initialState = {
   user: null,
-  loading: false,
+  loading: true,
   error: null,
 };
 
@@ -58,6 +58,13 @@ const reducer = (state, action) => {
         error: action.error,
       };
     }
+    case "SIGNOUT-SUCCESS": {
+      return {
+        user: null,
+        loading: false,
+        error: null,
+      };
+    }
     default: {
       return state;
     }
@@ -92,7 +99,6 @@ const AuthProvider = ({ children }) => {
     SIGNUP:
       ({ dispatch }) =>
       async (action) => {
-        console.log("hi");
         dispatch({ type: "SIGNUP-PENDING" });
         await axios
           .post("http://localhost:5000/api/user/signup", action.payload, {
@@ -112,12 +118,51 @@ const AuthProvider = ({ children }) => {
             });
           });
       },
+      LOAD:
+      ({ dispatch }) =>
+      async () => {
+        dispatch({ type: "SIGNUP-PENDING" });
+        await axios
+          .get("http://localhost:5000/api/user/load", {
+            withCredentials: true, //must be set for receive http only cookies form backend
+          })
+          .then((res) => {
+            dispatch({ type: "SIGNUP-SUCCESS", payload: res.data });
+          })
+          .catch((err) => {
+            dispatch({
+              type: "SIGNUP-FAILURE",
+              error: err.response?.data?.message,
+            });
+          });
+      },
+      SIGNOUT:
+      ({ dispatch }) =>
+      async (action) => {
+        dispatch({ type: "SIGNUP-PENDING" });
+        await axios
+          .get("http://localhost:5000/api/user/logout", {
+            withCredentials: true, //must be set for receive http only cookies form backend
+          })
+          .then(() => {
+            dispatch({ type: "SIGNOUT-SUCCESS" });
+          })
+          .catch((err) => {
+            dispatch({
+              type: "SIGNUP-FAILURE",
+              error: err.response?.data?.message,
+            });
+          });
+      },
   };
   const [user, dispatch] = useReducerAsync(
     reducer,
     initialState,
     asyncActionHandlers
   );
+  useEffect(()=>{
+    dispatch({type:"LOAD"})
+  },[])
   return (
     <AuthContext.Provider value={user}>
       <AuthContextDispatcher.Provider value={dispatch}>

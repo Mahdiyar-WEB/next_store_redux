@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import { useAuthActions, useAuth } from "@/Context/AuthContext";
+import { useEffect } from "react";
 
 const initialValues = {
   email: "",
@@ -20,10 +21,14 @@ const validationSchema = Yup.object({
 const Signin = () => {
   const router = useRouter();
   const dispatch = useAuthActions();
-  const { loading } = useAuth();
+  const { loading, user } = useAuth();
   const onSubmit = (values) => {
     dispatch({ type: "SIGNIN", payload: values });
   };
+
+  useEffect(()=>{
+    user && router.push("/")
+  },[]);
 
   const formik = useFormik({
     validateOnMount: true,

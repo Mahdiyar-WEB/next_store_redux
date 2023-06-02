@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import { toast } from "react-hot-toast";
 import * as Yup from "yup";
 import { useAuth, useAuthActions } from "@/Context/AuthContext";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const initialValues = {
   name: "",
@@ -31,20 +33,24 @@ const validationSchema = Yup.object({
 
 const Signup = () => {
   const dispatch = useAuthActions();
-  const {loading} = useAuth();
+  const router = useRouter();
+  const {loading,user} = useAuth();
   
   const onSubmit = (values) => {
     const { confirmPassword, ...newValues } = values;
     dispatch({type:"SIGNUP",payload: newValues});
   };
 
+  useEffect(()=>{
+    user && router.push("/")
+  },[]);
   const formik = useFormik({
     initialValues,
     validateOnMount: true,
     validationSchema,
     onSubmit,
   });
-  
+
   return (
     <form
       dir="rtl"

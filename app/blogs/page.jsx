@@ -1,11 +1,20 @@
 import BlogLayout from "@/components/BlogLayout/BlogLayout";
 import BlogList from "@/components/BlogList/BlogList";
+import { cookies } from "next/headers";
 
 const fetchBlogs = async (page) => {
+  const nextCookies = cookies();
   const response = await fetch(
     `http://localhost:5000/api/posts?page=${page}&limit=3`,
-    { cache: "no-store" }
+    {
+      cache: "no-store",
+      credentials: "include",
+      headers: {
+        Cookie: nextCookies.get("userToken")?.value || "",
+      },
+    }
   );
+  console.log("🚀 ~ file: page.jsx:18 ~ fetchBlogs ~ response:", response);
   return response.json();
 };
 
@@ -18,11 +27,11 @@ const Blogs = async ({ searchParams: { page = 1 } }) => {
       hasNextPage,
       nextPage,
       prevPage,
-      page:currentPage
+      page: currentPage,
     },
   } = await fetchBlogs(page);
   return (
-  <BlogLayout>
+    <BlogLayout>
       <BlogList
         blogs={blogs}
         totalPages={totalPages}
@@ -32,7 +41,7 @@ const Blogs = async ({ searchParams: { page = 1 } }) => {
         prevPage={prevPage}
         currentPage={currentPage}
       />
-  </BlogLayout>
+    </BlogLayout>
   );
 };
 
