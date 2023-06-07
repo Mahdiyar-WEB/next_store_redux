@@ -145,6 +145,7 @@ const AuthProvider = ({ children }) => {
             withCredentials: true, //must be set for receive http only cookies form backend
           })
           .then(() => {
+            toast.success("از حساب خود خارج شدید")
             dispatch({ type: "SIGNOUT-SUCCESS" });
           })
           .catch((err) => {
@@ -153,7 +154,7 @@ const AuthProvider = ({ children }) => {
               error: err.response?.data?.message,
             });
           });
-      },
+      }
   };
   const [user, dispatch] = useReducerAsync(
     reducer,

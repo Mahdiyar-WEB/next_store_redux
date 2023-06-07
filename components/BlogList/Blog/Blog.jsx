@@ -6,6 +6,7 @@ import { BiMessageDetail } from "react-icons/bi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import Link from "next/link";
 import toPersianDigits from "@/utils/toPersianDigits";
+import { toast } from "react-hot-toast";
 
 const Blog = ({
   image,
@@ -20,15 +21,62 @@ const Blog = ({
   commentsCount,
   isBookmarked,
   slug,
-  isRelated
+  isRelated,
+  postID,
 }) => {
   const [isBookmark, setIsBookmark] = useState(isBookmarked);
+  console.log("🚀 ~ file: Blog.jsx:28 ~ isBookmarked:", isBookmarked);
+  const [isLike, setIsLike] = useState(isLiked);
+  const [likeCount, setLikeCount] = useState(likesCount);
+  console.log("🚀 ~ file: Blog.jsx:29 ~ isLiked:", isLiked);
+
+  const handleLike = async (postID) => {
+    const response = await fetch(
+      `http://localhost:5000/api/posts/like/${postID}`,
+      {
+        credentials: "include",
+        method: "PUT",
+      }
+    );
+    if (response.ok) {
+      isLike
+        ? toast.success("لایک برداشته شد")
+        : toast.success("ممنون از لایکت");
+      isLike ? setLikeCount(likeCount - 1) : setLikeCount(likeCount + 1);
+      setIsLike(!isLike);
+    } else {
+      const data = await response.json();
+      toast.error(data.message);
+    }
+  };
+  const handleBookmark = async (postID) => {
+    const response = await fetch(
+      `http://localhost:5000/api/posts/bookmark/${postID}`,
+      {
+        method: "PUT",
+        credentials: "include",
+      }
+    );
+    if (response.ok) {
+      isBookmark
+        ? toast.success("پست از لیست ذخیره حذف شد")
+        : toast.success("پست ذخیره شد");
+      setIsBookmark(!isBookmark);
+    } else {
+      const data = await response.json();
+      toast.error(data.message);
+    }
+  };
+
   return (
     <section
       dir="ltr"
       className="rounded-3xl px-3 pt-3 overflow-hidden border shadow-sm col-span-12 mx-2 md:mx-0 md:col-span-6 lg:col-span-4 h-full flex flex-col"
     >
-      <Link href={`/blogs/${category.englishTitle}/${slug}`} className="aspect-w-16 aspect-h-9 ">
+      <Link
+        href={`/blogs/${category.englishTitle}/${slug}`}
+        className="aspect-w-16 aspect-h-9 "
+      >
         <Image
           className="w-full h-full object-center rounded-3xl object-cover"
           src={`/images/${image}`}
@@ -37,10 +85,17 @@ const Blog = ({
         />
       </Link>
       <div className="flex flex-col bg-gray-100  mb-3 mt-10 rounded-3xl h-full text-end px-3 pt-4 pb-4">
-        <Link href={`/blogs/${category.englishTitle}/${slug}`} className="w-fit ms-auto font-bold text-xl hover:text-purple-500">{title}</Link>
+        <Link
+          href={`/blogs/${category.englishTitle}/${slug}`}
+          className="w-fit ms-auto font-bold text-xl hover:text-purple-500"
+        >
+          {title}
+        </Link>
         <div className="mt-4 flex-1 flex flex-col justify-end">
           {/* author details */}
-          <div className={`flex justify-between ${isRelated?"mb-0":"mb-5"}`}>
+          <div
+            className={`flex justify-between ${isRelated ? "mb-0" : "mb-5"}`}
+          >
             <div className="bg-blue-100  text-xs hover:bg-blue-600 hover:text-blue-100 cursor-pointer transition-all duration-200  text-blue-600 flex items-center rounded-full">
               <Link
                 className="flex items-center px-5 py-0 h-full"
@@ -59,7 +114,11 @@ const Blog = ({
             </div>
           </div>
           {/* footer details */}
-          <div className={`justify-between items-center ${isRelated ? "hidden":"flex"}`}>
+          <div
+            className={`justify-between items-center ${
+              isRelated ? "hidden" : "flex"
+            }`}
+          >
             <p className="flex gap-2">
               <span dir="rtl" className="text-xs flex gap-1 text-gray-500">
                 <span>{toPersianDigits(readingTime)}</span>
@@ -69,18 +128,25 @@ const Blog = ({
             </p>
             <div className="flex gap-3">
               <button
-                // onClick={() => setIsBookmark(!isBookmark)}
+                onClick={() => handleBookmark(postID)}
                 className="bg-slate-300 p-1 rounded-md text-blue-500"
               >
                 {isBookmark ? <BsFillBookmarkFill /> : <BsBookmark />}
               </button>
               <div className="flex items-center gap-1 bg-slate-300 p-1 rounded-md text-gray-500">
-                <span className="text-xs font-semibold">{toPersianDigits(commentsCount)}</span>
+                <span className="text-xs font-semibold">
+                  {toPersianDigits(commentsCount)}
+                </span>
                 <BiMessageDetail />
               </div>
-              <button className="flex items-center gap-1 bg-slate-300 p-1 rounded-md text-red-500 transition-all duration-200 hover:bg-red-500 hover:text-red-100">
-                <span className="text-xs font-semibold">{toPersianDigits(likesCount)}</span>
-                {isLiked ? <AiFillHeart /> : <AiOutlineHeart />}
+              <button
+                onClick={() => handleLike(postID)}
+                className="flex items-center gap-1 bg-slate-300 p-1 rounded-md text-red-500 transition-all duration-200 hover:bg-red-500 hover:text-red-100"
+              >
+                <span className="text-xs font-semibold">
+                  {toPersianDigits(likeCount)}
+                </span>
+                {isLike ? <AiFillHeart /> : <AiOutlineHeart />}
               </button>
             </div>
           </div>

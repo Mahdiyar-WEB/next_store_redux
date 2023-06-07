@@ -10,7 +10,9 @@ const fetchBlogs = async (page, category) => {
       cache: "no-store",
       credentials: "include",
       headers: {
-        Cookie: nextCookies.get("userToken")?.value || "",
+        Cookie: nextCookies.get("userToken")?.value
+          ? `userToken=${nextCookies.get("userToken")?.value}`
+          : "",
       },
     }
   );

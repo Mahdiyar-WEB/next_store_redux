@@ -14,7 +14,7 @@ const BlogList = ({
   nextPage,
   prevPage,
   currentPage,
-  relatedPosts
+  relatedPosts,
 }) => {
   const router = useRouter();
   const pathname = usePathname();
@@ -38,9 +38,11 @@ const BlogList = ({
           <Blog
             isRelated={relatedPosts}
             key={blog._id}
+            postID={blog._id}
             authorImage={mahdiyarImage}
             author={blog.author}
             isLiked={blog.isLiked}
+            isBookmarked={blog.isBookmarked}
             likesCount={blog.likesCount}
             commentsCount={blog.commentsCount}
             alt={blog.slug}
