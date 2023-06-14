@@ -2,11 +2,11 @@ import BlogLayout from "@/components/BlogLayout/BlogLayout";
 import BlogList from "@/components/BlogList/BlogList";
 import { cookies } from "next/headers";
 
-const fetchBlogs = async (page) => {
+const fetchBlogs = async (page,sort) => {
   const nextCookies = cookies();
 
   const response = await fetch(
-    `http://localhost:5000/api/posts?page=${page}&limit=3`,
+    `http://localhost:5000/api/posts?page=${page}&limit=3&sort=${sort}`,
     {
       cache: "no-store",
       credentials: "include",
@@ -20,7 +20,9 @@ const fetchBlogs = async (page) => {
   return response.json();
 };
 
-const Blogs = async ({ searchParams: { page = 1 } }) => {
+const Blogs = async ({ searchParams: { page = 1 , sort="" } }) => {
+  console.log("🚀 ~ file: page.jsx:24 ~ Blogs ~ page:", page)
+  console.log("🚀 ~ file: page.jsx:24 ~ Blogs ~ sort:", sort)
   const {
     data: {
       docs: blogs,
@@ -31,8 +33,7 @@ const Blogs = async ({ searchParams: { page = 1 } }) => {
       prevPage,
       page: currentPage,
     },
-  } = await fetchBlogs(page);
-  console.log("🚀 ~ file: page.jsx:32 ~ Blogs ~ blogs:", blogs);
+  } = await fetchBlogs(page,sort);
   return (
     <BlogLayout>
       <BlogList

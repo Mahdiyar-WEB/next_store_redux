@@ -6,11 +6,11 @@ const fetchPostTabs = async () => {
   });
   return response.json();
 };
-const BlogLayout = async ({ children }) => {
+const BlogLayout = async ({ children,searchParams }) => {
   const blogTabs = await fetchPostTabs();
   return (
     <div className="max-w-screen-2xl mx-auto grid md:gap-10 grid-cols-12 md:grid-rows-[70px_minmax(300px,_1fr)]">
-      <BlogFilterSort />
+      <BlogFilterSort searchParams={searchParams} />
       <BlogTabs blogTabs={blogTabs.data} />
       <article
         dir="rtl"

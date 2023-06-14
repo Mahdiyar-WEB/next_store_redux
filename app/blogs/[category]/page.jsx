@@ -2,10 +2,10 @@ import BlogLayout from "@/components/BlogLayout/BlogLayout";
 import BlogList from "@/components/BlogList/BlogList";
 import { cookies } from "next/headers";
 
-const fetchBlogs = async (page, category) => {
+const fetchBlogs = async (page, category,sort) => {
   const nextCookies = cookies();
   const response = await fetch(
-    `http://localhost:5000/api/posts?page=${page}&limit=3&categorySlug=${category}`,
+    `http://localhost:5000/api/posts?page=${page}&limit=3&categorySlug=${category}&sort=${sort}`,
     {
       cache: "no-store",
       credentials: "include",
@@ -21,7 +21,7 @@ const fetchBlogs = async (page, category) => {
 
 const CategoryBlogs = async ({
   params: { category },
-  searchParams: { page = 1 },
+  searchParams: { page = 1,sort="" },
 }) => {
   const {
     data: {
@@ -32,7 +32,7 @@ const CategoryBlogs = async ({
       nextPage,
       prevPage,
     },
-  } = await fetchBlogs(page, category);
+  } = await fetchBlogs(page, category,sort);
   return (
     <BlogLayout>
       <BlogList

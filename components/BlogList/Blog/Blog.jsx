@@ -25,10 +25,8 @@ const Blog = ({
   postID,
 }) => {
   const [isBookmark, setIsBookmark] = useState(isBookmarked);
-  console.log("🚀 ~ file: Blog.jsx:28 ~ isBookmarked:", isBookmarked);
   const [isLike, setIsLike] = useState(isLiked);
   const [likeCount, setLikeCount] = useState(likesCount);
-  console.log("🚀 ~ file: Blog.jsx:29 ~ isLiked:", isLiked);
 
   const handleLike = async (postID) => {
     const response = await fetch(

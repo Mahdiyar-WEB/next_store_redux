@@ -3,7 +3,7 @@
 import Blog from "./Blog/Blog";
 import mahdiyarImage from "@/public/images/mahdiyar.jpeg";
 import toPersianDigits from "@/utils/toPersianDigits";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const BlogList = ({
@@ -18,16 +18,24 @@ const BlogList = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const sortParam = useSearchParams().get("sort");
 
   const handleAddQuery = (action, value) => {
     switch (action) {
       case "next": {
-        router.push(`${pathname}?page=${value}`);
+        sortParam
+          ? router.push(`${pathname}?page=${value}&sort=${sortParam}`)
+          : router.push(`${pathname}?page=${value}`);
       }
       case "prev": {
-        value === 1
-          ? router.push(pathname)
-          : router.push(`${pathname}?page=${value}`);
+        value === 1 &&
+          sortParam &&
+          router.push(`${pathname}?sort=${sortParam}`);
+        value === 1 && !sortParam && router.push(pathname);
+        value > 1 &&
+          sortParam &&
+          router.push(`${pathname}?page=${value}&sort=${sortParam}`);
+        value > 1 && !sortParam && router.push(`${pathname}?page=${value}`);
       }
     }
   };
@@ -56,7 +64,6 @@ const BlogList = ({
       })}
       {totalPages > 1 && (
         <div className="flex items-center justify-center col-span-12 gap-3">
-
           <button
             onClick={() => handleAddQuery("prev", prevPage)}
             className={`p-2 rounded-full border ${
@@ -85,7 +92,6 @@ const BlogList = ({
           >
             <IoIosArrowBack />
           </button>
-
         </div>
       )}
     </>
