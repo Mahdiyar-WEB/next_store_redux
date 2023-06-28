@@ -1,10 +1,10 @@
 "use client";
-import axios from "axios";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import { useAuthActions, useAuth } from "@/Context/AuthContext";
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { signin } from "@/redux/features/user/userSlice";
 
 const initialValues = {
   email: "",
@@ -20,15 +20,15 @@ const validationSchema = Yup.object({
 
 const Signin = () => {
   const router = useRouter();
-  const dispatch = useAuthActions();
-  const { loading, user } = useAuth();
+  const dispatch = useDispatch();
+  const { loading, user } = useSelector((state) => state.user);
   const onSubmit = (values) => {
-    dispatch({ type: "SIGNIN", payload: values });
+    dispatch(signin(values));
   };
 
-  useEffect(()=>{
-    user && router.push("/")
-  },[]);
+  useEffect(() => {
+    user && router.push("/");
+  }, [user]);
 
   const formik = useFormik({
     validateOnMount: true,
@@ -79,14 +79,16 @@ const Signin = () => {
         />
       </div>
       <button
-        className={` rounded-lg px-10 py-2 w-fit text-white flex justify-center ${loading?"bg-blue-300":"bg-blue-500"}`}
+        className={` rounded-lg px-10 py-2 w-fit text-white flex justify-center ${
+          loading ? "bg-blue-300" : "bg-blue-500"
+        }`}
         type="submit"
         disabled={loading}
       >
         {loading && (
           <svg
             aria-hidden="true"
-            class="inline w-6 h-6 text-white animate-spin fill-blue-500"
+            className="inline w-6 h-6 text-white animate-spin fill-blue-500"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +103,7 @@ const Signin = () => {
             />
           </svg>
         )}
-       {!loading && <span>ورود</span>}
+        {!loading && <span>ورود</span>}
       </button>
     </form>
   );

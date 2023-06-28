@@ -21,8 +21,6 @@ const fetchBlogs = async (page,sort) => {
 };
 
 const Blogs = async ({ searchParams: { page = 1 , sort="" } }) => {
-  console.log("🚀 ~ file: page.jsx:24 ~ Blogs ~ page:", page)
-  console.log("🚀 ~ file: page.jsx:24 ~ Blogs ~ sort:", sort)
   const {
     data: {
       docs: blogs,

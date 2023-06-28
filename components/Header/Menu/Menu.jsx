@@ -2,10 +2,10 @@ import React from "react";
 import { MdStorefront } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import Link from "next/link";
-import { useAuth } from "@/Context/AuthContext";
+import { useSelector } from "react-redux";
 
 const Menu = ({ show, handleShow }) => {
-  const { user } = useAuth();
+  const { user } = useSelector((state) => state.user);
   return (
     <div
       className={`transition-all ease-linear font-semibold duration-300 z-20 px-5 py-8 fixed h-screen bg-white border-l shadow-md top-0 right-0 w-4/6 md:hidden  ${

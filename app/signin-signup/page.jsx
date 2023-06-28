@@ -21,12 +21,12 @@ const Signin_Signup = () => {
           />
           <h1 className="text-2xl font-medium text-center">خوش آمدید</h1>
         </div>
-        <div class=" border-gray-200 dark:border-gray-700 flex flex-col items-center w-full lg:w-3/5 pt-4">
-          <ul class="flex -mb-px text-md font-medium text-center text-gray-500 dark:text-gray-400">
-            <li class="mr-2">
+        <div className=" border-gray-200 dark:border-gray-700 flex flex-col items-center w-full lg:w-3/5 pt-4">
+          <ul className="flex -mb-px text-md font-medium text-center text-gray-500 dark:text-gray-400">
+            <li className="mr-2">
               <button
                 onClick={() => setIsLogin(true)}
-                class={`flex items-center gap-1 p-4 border-b-2 border-transparent rounded-t-lg ${
+                className={`flex items-center gap-1 p-4 border-b-2 border-transparent rounded-t-lg ${
                   isLogin
                     ? "text-blue-600  border-blue-600 dark:text-blue-500 dark:border-blue-500"
                     : "hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
@@ -36,10 +36,10 @@ const Signin_Signup = () => {
                 ورود
               </button>
             </li>
-            <li class="mr-2">
+            <li className="mr-2">
               <button
                 onClick={() => setIsLogin(false)}
-                class={`flex items-center gap-1 p-4 rounded-t-lg border-b-2 border-transparent active group ${
+                className={`flex items-center gap-1 p-4 rounded-t-lg border-b-2 border-transparent active group ${
                   !isLogin
                     ? "text-blue-600  border-blue-600 dark:text-blue-500 dark:border-blue-500"
                     : "hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
