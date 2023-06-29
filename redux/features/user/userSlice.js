@@ -1,8 +1,6 @@
 "use client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import { handleLogout, handleSignin, handleSignup } from "./userApi";
-import { useRouter } from "next/router";
 import axios from "axios";
 
 const initialState = {
@@ -95,63 +93,63 @@ const userSlice = createSlice({
       return { loading: false, error: null, user: null };
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(loadUser.pending, (state) => {
+  extraReducers: ({addCase}) => {
+    addCase(loadUser.pending, (state) => {
       state.loading = true;
       state.user = null;
       state.error = null;
     });
-    builder.addCase(loadUser.fulfilled, (state, action) => {
+    addCase(loadUser.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload;
       state.error = null;
     });
-    builder.addCase(loadUser.rejected, (state, action) => {
+    addCase(loadUser.rejected, (state, action) => {
       state.loading = false;
       state.user = null;
       state.error = action.error.message;
     });
-    builder.addCase(signin.pending, (state) => {
+    addCase(signin.pending, (state) => {
       state.loading = true;
       state.user = null;
       state.error = null;
     });
-    builder.addCase(signin.fulfilled, (state, action) => {
+    addCase(signin.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload;
       state.error = null;
     });
-    builder.addCase(signin.rejected, (state, action) => {
+    addCase(signin.rejected, (state, action) => {
       state.loading = false;
       state.user = null;
       state.error = action.error.message;
     });
-    builder.addCase(signup.pending, (state) => {
+    addCase(signup.pending, (state) => {
       state.loading = true;
       state.user = null;
       state.error = null;
     });
-    builder.addCase(signup.fulfilled, (state, action) => {
+    addCase(signup.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload;
       state.error = null;
     });
-    builder.addCase(signup.rejected, (state, action) => {
+    addCase(signup.rejected, (state, action) => {
       state.loading = false;
       state.user = null;
       state.error = action.error.message;
     });
-    builder.addCase(logout.pending, (state) => {
+    addCase(logout.pending, (state) => {
       state.loading = true;
       state.user = null;
       state.error = null;
     });
-    builder.addCase(logout.fulfilled, (state) => {
+    addCase(logout.fulfilled, (state) => {
       state.loading = false;
       state.user = null;
       state.error = null;
     });
-    builder.addCase(logout.rejected, (state, action) => {
+    addCase(logout.rejected, (state, action) => {
       state.loading = false;
       state.user = null;
       state.error = action.error.message;

@@ -33,6 +33,7 @@ const PostSlug = async ({ params: { blogSlug } }) => {
       slug,
       related,
       comments,
+      _id
     },
   } = await fetchBlog(blogSlug);
   return (
@@ -57,7 +58,7 @@ const PostSlug = async ({ params: { blogSlug } }) => {
         isBookmarked={isBookmarked}
       />
       <RelatedPosts relatedPosts={related} />
-      <BlogComments comments={comments} />
+      <BlogComments comments={comments.reverse()} postID={_id} />
     </>
   );
 };
